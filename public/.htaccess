@@ -1,0 +1,45 @@
+# Motor de reescrita deve estar ativo
+RewriteEngine On
+
+# Retira a listagem de estrutura de diretorios 
+Options -Indexes 
+
+# As flags !-f e !-d estão determinando que o redirect só ocorrera se não existir arquivo ou pasta com a url correspondente.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Regra de reescrita.
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Defina o pacote “ea-php74” como a linguagem padrão de programação “PHP”.
+<IfModule mime_module>
+AddHandler application/x-httpd-ea-php74 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
+
+
+# Impede que o site seja carregado dentro de iframes (Clickjacking)
+Header always set X-Frame-Options "DENY"
+
+# Impede que o navegador tente adivinhar o tipo de conteúdo
+Header set X-Content-Type-Options "nosniff"
+
+# Ativa HTTPS estrito (HSTS)
+Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+
+# Protege contra ataques XSS simples
+Header set X-XSS-Protection "1; mode=block"
+
+# Política de conteúdo básica (evita execução de JS de terceiros)
+# Header set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self';"
+
+
+# Bloqueia acesso a arquivos .env e config
+<FilesMatch "^\.env">
+Order allow,deny
+Deny from all
+</FilesMatch>
+
+# Oculta versão do servidor
+ServerSignature Off

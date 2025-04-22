@@ -1,0 +1,12 @@
+# Motor de reescrita deve estar ativo
+RewriteEngine On
+
+# Retira a listagem de estrutura de diretorios 
+Options -Indexes 
+
+# As flags !-f e !-d estão determinando que o redirect só ocorrera se não existir arquivo ou pasta com a url correspondente.
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Regra de reescrita.
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]

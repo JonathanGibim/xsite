@@ -1,0 +1,6 @@
+.login-box, .register-box {
+	width: 450px;
+}
+.nav-item.has-treeview .nav-link{
+	cursor: pointer;
+}
